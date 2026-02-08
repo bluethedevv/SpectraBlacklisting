@@ -195,14 +195,13 @@
             font-weight: 500;
         }
 
-        /* Blacklist Table */
-        .blacklist-section {
+        /* Search */
+        .search-section {
             margin: 4rem 0;
         }
 
-        .blacklist-container {
-            padding: 2rem;
-            margin-top: 1.5rem;
+        .search-container {
+            padding: 3rem;
         }
 
         .section-title {
@@ -211,27 +210,78 @@
             color: var(--light);
         }
 
-        .blacklist-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
         }
 
-        .blacklist-table th {
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 2px solid var(--gray-dark);
-            color: var(--accent);
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gray-dark);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            border-radius: var(--radius-sm);
             font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .blacklist-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-dark);
+        .search-button:hover {
+            background: var(--primary-dark);
         }
 
-        .blacklist-table tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+        /* Results */
+        .results-container {
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #5865f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .badge {
@@ -243,20 +293,23 @@
         }
 
         .badge-scam { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-        .badge-exploit { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
-        .badge-phishing { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+        .badge-harassment { background: rgba(236, 72, 153, 0.2); color: #f9a8d4; }
+        .badge-theft { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        .badge-fraud { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+        .badge-racism { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
+        .badge-suspicious { background: rgba(156, 163, 175, 0.2); color: #d1d5db; }
 
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            margin: 2rem 0;
+            color: var(--gray);
         }
 
         .empty-icon {
-            font-size: 4rem;
-            color: var(--gray);
-            margin-bottom: 2rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
 
         /* Bot Info */
@@ -297,41 +350,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Search */
-        .search-section {
-            margin: 4rem 0;
-        }
-
-        .search-container {
-            padding: 3rem;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 12px;
-            margin: 2rem 0;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-sm);
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--gray-dark);
-            color: white;
-            font-size: 1rem;
-        }
-
-        .search-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 2rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-        }
-
         /* Footer */
         footer {
             padding: 4rem 2rem 2rem;
@@ -365,6 +383,7 @@
         .footer-section a {
             color: var(--gray);
             text-decoration: none;
+            transition: var(--transition);
         }
 
         .footer-section a:hover {
@@ -447,9 +466,9 @@
         <nav>
             <ul>
                 <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#blacklist">Blacklist</a></li>
-                <li><a href="#bot">Bot</a></li>
                 <li><a href="#search">Search</a></li>
+                <li><a href="#bot">Bot</a></li>
+                <li><a href="#about">About</a></li>
             </ul>
         </nav>
         <a href="https://discord.gg/kDC7qTAXHe" target="_blank" class="discord-btn">
@@ -462,7 +481,7 @@
         <!-- Hero -->
         <section id="home" class="hero">
             <h1>SpectraBlacklisting</h1>
-            <p>Real-time scam protection for Discord communities. No fake data, only real protection.</p>
+            <p>Community protection system against scammers and malicious actors. Real-time blacklisting with Discord integration.</p>
             <div style="margin-top: 2rem;">
                 <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="discord-btn" style="font-size: 1.1rem;">
                     <i class="fas fa-robot"></i> Add Bot to Server
@@ -477,7 +496,7 @@
                 <div class="stat-label">Communities Protected</div>
             </div>
             <div class="stat-card glass">
-                <div class="stat-number">52417</div>
+                <div class="stat-number">0</div>
                 <div class="stat-label">Incidents Prevented</div>
             </div>
             <div class="stat-card glass">
@@ -490,31 +509,31 @@
             </div>
         </section>
 
-        <!-- Blacklist Table -->
-        <section id="blacklist" class="blacklist-section">
-            <h2 class="section-title">Active Blacklists</h2>
-            <div class="blacklist-container glass">
-                <div id="blacklistTableContainer">
-                    <!-- Table will be loaded here -->
-                </div>
-            </div>
-        </section>
-
         <!-- Search -->
         <section id="search" class="search-section">
             <div class="search-container glass">
                 <h2 class="section-title">Search Blacklist Database</h2>
-                <p style="color: var(--gray);">Search by Discord ID, username, or Roblox username</p>
+                <p style="color: var(--gray);">Search by Discord ID, username, or reason</p>
                 
                 <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Enter Discord ID (e.g., 123456789012345678) or username...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Enter Discord ID, username, or reason...">
                     <button class="search-button" id="searchBtn">
                         <i class="fas fa-search"></i> Search
                     </button>
                 </div>
                 
-                <div id="searchResults" style="display: none;">
+                <!-- Search Results -->
+                <div id="searchResults" class="results-container" style="display: none;">
                     <div id="resultsContent"></div>
+                </div>
+
+                <!-- No Results State -->
+                <div id="noResults" class="empty-state" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>No Results Found</h3>
+                    <p>No blacklist entries match your search query.</p>
                 </div>
             </div>
         </section>
@@ -523,44 +542,54 @@
         <section id="bot" class="bot-info glass">
             <div class="bot-header">
                 <i class="fab fa-discord"></i>
-                <h2 style="font-size: 2rem;">Discord Bot Features</h2>
+                <h2 style="font-size: 2rem;">Discord Bot Integration</h2>
             </div>
             
             <p style="color: var(--gray-light); margin-bottom: 2rem;">
-                Add our bot to protect your community. Real-time blacklist checks and management.
+                Add our Discord bot to your server for real-time blacklist protection and management.
             </p>
             
             <div class="commands-grid">
                 <div class="command-card">
-                    <div class="command-name">/blacklist add [user] [roblox] [reason]</div>
-                    <p>Add user to blacklist. Only main server admins can use this.</p>
+                    <div class="command-name">/blacklist add @user [roblox] [reason]</div>
+                    <p>Add a user to the global blacklist with Discord and Roblox information.</p>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">/blacklist check [user]</div>
-                    <p>Check if a user is blacklisted. Anyone can use.</p>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">/blacklist view</div>
-                    <p>View all blacklisted users in database.</p>
+                    <div class="command-name">/blacklist check @user</div>
+                    <p>Check if a user is currently blacklisted in the system.</p>
                 </div>
                 <div class="command-card">
                     <div class="command-name">/logchannel #channel</div>
-                    <p>Set channel for blacklist notifications.</p>
+                    <p>Set a channel to receive blacklist notifications and updates.</p>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">/stats</div>
-                    <p>View real-time statistics.</p>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">/help</div>
-                    <p>Show help information.</p>
+                    <div class="command-name">/blacklist view</div>
+                    <p>View all currently blacklisted users in your server.</p>
                 </div>
             </div>
             
-            <div style="text-align: center; margin-top: 3rem;">
+            <div style="margin-top: 3rem; text-align: center;">
                 <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="discord-btn" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
-                    <i class="fas fa-robot"></i> Invite Bot to Server
+                    <i class="fas fa-robot"></i> Add Bot to Server
                 </a>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="search-section">
+            <div class="search-container glass">
+                <h2 class="section-title">About SpectraBlacklisting</h2>
+                <div style="color: var(--gray-light); line-height: 1.8;">
+                    <p style="margin-bottom: 1rem;">
+                        SpectraBlacklisting is a community-driven protection system designed to keep Discord and Roblox communities safe from scammers and malicious actors.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Our system uses real-time blacklisting to prevent known scammers from causing harm across multiple communities. The database is maintained by trusted administrators and is accessible to all partnered servers.
+                    </p>
+                    <p>
+                        <strong>No fake data.</strong> We only track and list confirmed malicious actors based on verified reports from trusted sources.
+                    </p>
+                </div>
             </div>
         </section>
     </main>
@@ -570,16 +599,16 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>SpectraBlacklisting</h3>
-                <p style="color: var(--gray);">Real protection against scammers. No fake data.</p>
+                <p style="color: var(--gray);">Real protection for real communities. No fake data.</p>
             </div>
             
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#blacklist">Blacklist</a></li>
-                    <li><a href="#bot">Discord Bot</a></li>
                     <li><a href="#search">Search</a></li>
+                    <li><a href="#bot">Discord Bot</a></li>
+                    <li><a href="#about">About</a></li>
                 </ul>
             </div>
             
@@ -609,180 +638,257 @@
     </footer>
 
     <script>
-        // Website Data (in real use, would load from website_data.json)
-        let blacklistData = [];
-        
-        // Load data from bot's JSON file
-        async function loadBlacklistData() {
-            try {
-                const response = await fetch('website_data.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    blacklistData = data;
-                    updateBlacklistTable();
-                } else {
-                    showEmptyState();
-                }
-            } catch (error) {
-                console.log('No blacklist data found yet.');
-                showEmptyState();
+        // REAL BLACKLIST DATABASE - 15 ENTRIES
+        const blacklistDatabase = [
+            {
+                discord_id: "1365250342626918450",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Scamming, Stealing and being rude.",
+                date: "2026-02-03",
+                type: "scam"
+            },
+            {
+                discord_id: "10030028262",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "Scamming",
+                date: "2026-02-03",
+                type: "scam"
+            },
+            {
+                discord_id: "488961474023260180",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Suspicious Activity",
+                date: "2026-02-04",
+                type: "suspicious"
+            },
+            {
+                discord_id: "1094428260563177502",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Rudeness, Review bombing people's sites, etc.",
+                date: "2026-02-04",
+                type: "harassment"
+            },
+            {
+                discord_id: "1302882781",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "https://youtu.be/4Ljy7e0PcGM?si=5pRy8umjzf3GsEXS",
+                date: "2026-02-04",
+                type: "scam"
+            },
+            {
+                discord_id: "735090265064341605",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "https://youtu.be/4Ljy7e0PcGM?si=5pRy8umjzf3GsEXS",
+                date: "2026-02-04",
+                type: "scam"
+            },
+            {
+                discord_id: "7213036652",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "Stolen whitehill cardiff bay, stole from crews game, stolen assets from tech groups, said racial abuse like 90 times to me when one snitched, he admitted to save instancing from tescoblox and bloxco, and he keeps accusing people of taking his game every server they talk in, etc. Also https://www.youtube.com/watch?v=J_oWK5nzBGY",
+                date: "2026-02-04",
+                type: "theft"
+            },
+            {
+                discord_id: "1400734562711244886",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Stolen whitehill cardiff bay, stole from crews game, stolen assets from tech groups, said racial abuse like 90 times to me when one snitched, he admitted to save instancing from tescoblox and bloxco, and he keeps accusing people of taking his game every server they talk in, etc. Also https://www.youtube.com/watch?v=J_oWK5nzBGY",
+                date: "2026-02-04",
+                type: "theft"
+            },
+            {
+                discord_id: "7740187792",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "Stealing loads of products and maps from multiple people including me, going so far as to run his whole \"tech group\" selling products all made by CANADIANJET. Oh boy this is just the tip of the iceburg, hes been impersonating multiple users including surge/josh and stealing and reusing logos from multiple companies including PrismDev, Innova, Basic Retail and so much more. He also often harasses people and makes jokes about peoples family members being dead or saying hes going to kill them. He also always creates and shuts down new servers and forces freinds to join them (from experience) and they always die a hes never up to make things himself and just steal them or try look for devs. Spoiler alert nobody wants to work for him. Hes also guilt tript, straight up lied and much more activities. Unappealable Blacklist. Stay away from him and do not accociate with this fraud.",
+                date: "2026-02-04",
+                type: "fraud"
+            },
+            {
+                discord_id: "1323764431477407897",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Stealing loads of products and maps from multiple people including me, going so far as to run his whole \"tech group\" selling products all made by CANADIANJET. Oh boy this is just the tip of the iceburg, hes been impersonating multiple users including surge/josh and stealing and reusing logos from multiple companies including PrismDev, Innova, Basic Retail and so much more. He also often harasses people and makes jokes about peoples family members being dead or saying hes going to kill them. He also always creates and shuts down new servers and forces freinds to join them (from experience) and they always die a hes never up to make things himself and just steal them or try look for devs. Spoiler alert nobody wants to work for him. Hes also guilt tript, straight up lied and much more activities. Unappealable Blacklist. Stay away from him and do not accociate with this fraud.",
+                date: "2026-02-04",
+                type: "fraud"
+            },
+            {
+                discord_id: "9827032057",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "Using AI for like everything such as his company logos, ads, announcements, builds, scripts, websites you name it. He legit has a copilot subscription. But he lies about it, and the real bad part about him is that he harasses people very often, we have caught him multiple times saying racial slurs to people and telling them to do deplorable things, and he bans anyone who speaks up - in addition to this he has a previous history of stealing and reselling assets from the roblox toolbox such as \"PTG\".",
+                date: "2026-02-04",
+                type: "harassment"
+            },
+            {
+                discord_id: "1436474204881948803",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Using AI for like everything such as his company logos, ads, announcements, builds, scripts, websites you name it. He legit has a copilot subscription. But he lies about it, and the real bad part about him is that he harasses people very often, we have caught him multiple times saying racial slurs to people and telling them to do deplorable things, and he bans anyone who speaks up - in addition to this he has a previous history of stealing and reselling assets from the roblox toolbox such as \"PTG\".",
+                date: "2026-02-04",
+                type: "harassment"
+            },
+            {
+                discord_id: "1274315344189587511",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Stealing assets and claiming them assets as their own",
+                date: "2026-02-04",
+                type: "theft"
+            },
+            {
+                discord_id: "8451083374",
+                discord_name: "Roblox User",
+                roblox_user: "Roblox User",
+                reason: "Heavy use of racism, harrasment and guilt trips",
+                date: "2026-02-07",
+                type: "racism"
+            },
+            {
+                discord_id: "1454811014251155513",
+                discord_name: "Discord User",
+                roblox_user: "Unknown",
+                reason: "Heavy use of racism, harrasment and guilt trips",
+                date: "2026-02-07",
+                type: "racism"
             }
-        }
-        
-        function showEmptyState() {
-            const container = document.getElementById('blacklistTableContainer');
-            container.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h2 style="color: var(--light); margin-bottom: 1rem;">No Active Blacklists</h2>
-                    <p style="color: var(--gray);">There are currently no blacklisted users in the database.</p>
-                    <p style="color: var(--gray); font-size: 0.9rem; margin-top: 1rem;">Blacklists will appear here when added via Discord bot.</p>
-                </div>
-            `;
-        }
-        
-        function updateBlacklistTable() {
-            const container = document.getElementById('blacklistTableContainer');
-            
-            if (blacklistData.length === 0) {
-                showEmptyState();
-                return;
-            }
-            
-            let html = `
-                <div style="overflow-x: auto;">
-                    <table class="blacklist-table">
-                        <thead>
-                            <tr>
-                                <th>Discord User</th>
-                                <th>Roblox User</th>
-                                <th>Reason</th>
-                                <th>Date Added</th>
-                                <th>Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            blacklistData.forEach(entry => {
-                const badgeClass = `badge-${entry.type}`;
-                const badgeText = entry.type.charAt(0).toUpperCase() + entry.type.slice(1);
-                
-                html += `
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #5865f2; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fab fa-discord"></i>
-                                </div>
-                                <div>
-                                    <div>${entry.discord_name}</div>
-                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: ${entry.discord_id}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${entry.roblox_user}</td>
-                        <td>${entry.reason}</td>
-                        <td>${entry.date}</td>
-                        <td><span class="badge ${badgeClass}">${badgeText}</span></td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                        </tbody>
-                    </table>
-                </div>
-                <div style="margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">
-                    Total: ${blacklistData.length} blacklisted users
-                </div>
-            `;
-            
-            container.innerHTML = html;
-        }
-        
+        ];
+
         // Search functionality
         document.getElementById('searchBtn').addEventListener('click', performSearch);
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') performSearch();
         });
-        
+
         function performSearch() {
-            const query = document.getElementById('searchInput').value.trim();
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const resultsDiv = document.getElementById('searchResults');
+            const noResultsDiv = document.getElementById('noResults');
             const resultsContent = document.getElementById('resultsContent');
             
+            // Hide both initially
+            resultsDiv.style.display = 'none';
+            noResultsDiv.style.display = 'none';
+            
             if (!query) {
-                resultsDiv.style.display = 'block';
-                resultsContent.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
-                        Please enter a search query.
-                    </div>
-                `;
+                showNoResults("Please enter a search query.");
                 return;
             }
             
+            // Show loading state
+            const searchBtn = document.getElementById('searchBtn');
+            const originalText = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<div class="loading"></div>';
+            searchBtn.disabled = true;
+            
+            // Simulate search delay
+            setTimeout(() => {
+                const filteredResults = blacklistDatabase.filter(entry => 
+                    entry.discord_id.toLowerCase().includes(query) ||
+                    entry.discord_name.toLowerCase().includes(query) ||
+                    entry.roblox_user.toLowerCase().includes(query) ||
+                    entry.reason.toLowerCase().includes(query) ||
+                    entry.type.toLowerCase().includes(query) ||
+                    entry.date.toLowerCase().includes(query)
+                );
+                
+                // Reset button
+                searchBtn.innerHTML = originalText;
+                searchBtn.disabled = false;
+                
+                if (filteredResults.length === 0) {
+                    showNoResults(`No results found for "${query}"`);
+                    return;
+                }
+                
+                // Show results
+                displayResults(filteredResults, query);
+            }, 300);
+        }
+
+        function showNoResults(message) {
+            const noResultsDiv = document.getElementById('noResults');
+            const resultsDiv = document.getElementById('searchResults');
+            
+            resultsDiv.style.display = 'none';
+            noResultsDiv.style.display = 'block';
+            noResultsDiv.innerHTML = `
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>${message}</h3>
+                <p>Try searching with different keywords or check the spelling.</p>
+            `;
+        }
+
+        function displayResults(results, query) {
+            const resultsDiv = document.getElementById('searchResults');
+            const resultsContent = document.getElementById('resultsContent');
+            const noResultsDiv = document.getElementById('noResults');
+            
+            noResultsDiv.style.display = 'none';
             resultsDiv.style.display = 'block';
             
-            if (blacklistData.length === 0) {
-                resultsContent.innerHTML = `
-                    <div style="text-align: center; padding: 2rem;">
-                        <i class="fas fa-database" style="font-size: 2rem; color: var(--gray); margin-bottom: 1rem;"></i>
-                        <h3 style="color: var(--light); margin-bottom: 0.5rem;">Database Empty</h3>
-                        <p style="color: var(--gray);">There are no blacklisted users yet.</p>
-                    </div>
-                `;
-                return;
-            }
+            let html = `<h3 style="color: var(--light); margin-bottom: 1rem;">Search Results (${results.length} found)</h3>`;
             
-            const searchLower = query.toLowerCase();
-            const filtered = blacklistData.filter(entry => 
-                entry.discord_id.includes(searchLower) ||
-                entry.discord_name.toLowerCase().includes(searchLower) ||
-                entry.roblox_user.toLowerCase().includes(searchLower) ||
-                entry.reason.toLowerCase().includes(searchLower)
-            );
-            
-            if (filtered.length === 0) {
-                resultsContent.innerHTML = `
-                    <div style="text-align: center; padding: 2rem;">
-                        <i class="fas fa-search" style="font-size: 2rem; color: var(--gray); margin-bottom: 1rem;"></i>
-                        <h3 style="color: var(--light); margin-bottom: 0.5rem;">No Results Found</h3>
-                        <p style="color: var(--gray);">No blacklist entries match your search.</p>
-                        <p style="color: var(--gray); font-size: 0.9rem; margin-top: 1rem;">Search: "${query}"</p>
-                    </div>
-                `;
-            } else {
-                let html = '<h3 style="margin-bottom: 1rem; color: var(--light);">Search Results</h3>';
-                html += '<div style="display: grid; gap: 1rem;">';
+            results.forEach((entry, index) => {
+                const badgeClass = `badge-${entry.type}`;
+                const badgeText = entry.type.charAt(0).toUpperCase() + entry.type.slice(1);
                 
-                filtered.forEach(entry => {
-                    const badgeClass = `badge-${entry.type}`;
-                    html += `
-                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm);">
-                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                                <div>
-                                    <strong>${entry.discord_name}</strong><br>
-                                    <small style="color: var(--gray);">ID: ${entry.discord_id}</small>
+                // Highlight search term in reason
+                let highlightedReason = entry.reason;
+                if (query.length > 2) {
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    highlightedReason = entry.reason.replace(regex, '<mark style="background: rgba(99, 102, 241, 0.3); padding: 2px 4px; border-radius: 3px;">$1</mark>');
+                }
+                
+                html += `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <div class="result-user">
+                                <div class="user-avatar">
+                                    <i class="fab fa-discord"></i>
                                 </div>
-                                <span class="badge ${badgeClass}">${entry.type}</span>
+                                <div>
+                                    <strong style="color: var(--light);">${entry.discord_name}</strong>
+                                    <div style="font-size: 0.8rem; color: var(--gray);">ID: ${entry.discord_id}</div>
+                                </div>
                             </div>
-                            <div style="color: var(--gray-light);">
-                                <strong>Roblox:</strong> ${entry.roblox_user}<br>
-                                <strong>Reason:</strong> ${entry.reason}<br>
-                                <strong>Added:</strong> ${entry.date}
-                            </div>
+                            <span class="badge ${badgeClass}">${badgeText}</span>
                         </div>
-                    `;
-                });
-                
-                html += '</div>';
-                resultsContent.innerHTML = html;
-            }
+                        
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong style="color: var(--gray-light);">Roblox User:</strong> ${entry.roblox_user}
+                        </div>
+                        
+                        <div style="margin-bottom: 0.5rem;">
+                            <strong style="color: var(--gray-light);">Reason:</strong> 
+                            <div style="color: var(--gray-light); margin-top: 0.25rem;">${highlightedReason}</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                            <span style="color: var(--gray); font-size: 0.9rem;">
+                                <i class="far fa-calendar"></i> ${entry.date}
+                            </span>
+                            <span style="color: var(--gray); font-size: 0.9rem;">
+                                Entry #${index + 1}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultsContent.innerHTML = html;
         }
-        
+
         // Navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -807,17 +913,38 @@
                 }
             });
         });
-        
-        // Auto-refresh data every 30 seconds
-        function autoRefresh() {
-            loadBlacklistData();
-            setTimeout(autoRefresh, 30000);
-        }
-        
-        // Initialize on load
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 150;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Show database size on load
         document.addEventListener('DOMContentLoaded', function() {
-            loadBlacklistData();
-            autoRefresh();
+            console.log(`📊 Blacklist Database Loaded: ${blacklistDatabase.length} entries`);
+            console.log(`🚫 Incidents Prevented: 0 (No fake data)`);
+            
+            // Update stats with real numbers
+            const stats = document.querySelectorAll('.stat-number');
+            if (stats.length >= 2) {
+                stats[1].textContent = "0"; // Incidents Prevented = 0
+            }
         });
     </script>
 </body>
