@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpectraBlacklisting | Anti-Scam Protection 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --light: #f8fafc;
+            --dark: #020617;
+            --gray: #64748b;
+            --gray-dark: #334155;
+            --gray-light: #e2e8f0;
+            
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 16px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Liquid Glass Effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-heavy {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--light), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--gray-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--light), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--gray-light);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Info Cards */
+        .info-section {
+            margin: 6rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--light);
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            padding: 2.5rem;
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .info-card p {
+            color: var(--gray-light);
+        }
+
+        /* Search Section */
+        .search-section {
+            margin: 6rem 0;
+        }
+
+        .search-container {
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--light);
+        }
+
+        .search-title i {
+            color: var(--accent);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gray-dark);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .search-note {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Status Message */
+        .status-message {
+            padding: 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: var(--radius);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-message i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .status-message h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .status-message p {
+            color: var(--gray-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Coming Soon */
+        .coming-soon {
+            padding: 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border-radius: var(--radius);
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .coming-soon i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            margin-bottom: 0.5rem;
+        }
+
+        .year {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .hero {
+                padding: 4rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .cta-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .glass {
+                border-radius: 12px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="glass-heavy">
+        <a href="#" class="logo">
+            <div class="logo-icon">SB</div>
+            <div class="logo-text">SpectraBlacklisting</div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button" id="connectBtn">
+            <i class="fas fa-plug"></i> Connect Service
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero fade-in">
+            <h1>Advanced Anti-Scam Protection <span class="year">2026</span></h1>
+            <p>SpectraBlacklisting provides cutting-edge scam detection and prevention services. Our platform is designed to protect communities from malicious actors with real-time threat intelligence.</p>
+            <div class="hero-buttons">
+                <a href="#search" class="cta-button">
+                    <i class="fas fa-search"></i> Search Database
+                </a>
+                <button class="cta-button secondary" id="learnMoreBtn">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </button>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats fade-in delay-1">
+            <div class="stat-card glass">
+                <div class="stat-number" id="protectedCount">0</div>
+                <div class="stat-label">Communities Protected</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-number" id="incidentsCount">0</div>
+                <div class="stat-label">Incidents Prevented</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-number" id="responseTime">0ms</div>
+                <div class="stat-label">Average Response Time</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-number" id="uptimeCount">100%</div>
+                <div class="stat-label">Service Uptime</div>
+            </div>
+        </section>
+
+        <!-- Status Message -->
+        <section class="status-message glass fade-in delay-2">
+            <i class="fas fa-shield-alt"></i>
+            <h3>System Status: Operational</h3>
+            <p>All SpectraBlacklisting services are currently running normally. Last incident reported 14 days ago.</p>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="search-section fade-in delay-3">
+            <div class="search-container glass">
+                <h2 class="search-title"><i class="fas fa-search"></i> Search Blacklist Database</h2>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Enter Discord ID, Roblox Username, or Report ID...">
+                    <button class="cta-button" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <p class="search-note">Search our comprehensive database of verified scam reports and blacklisted entities.</p>
+                
+                <!-- Search Results Container -->
+                <div id="searchResults" style="display: none; margin-top: 2rem; padding: 1.5rem; border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.2);">
+                    <div id="resultsContent"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section id="about" class="info-section fade-in">
+            <h2 class="section-title">How SpectraBlacklisting Works</h2>
+            <div class="info-cards">
+                <div class="info-card glass">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Real-Time Detection</h3>
+                    <p>Advanced algorithms monitor and detect suspicious activities across platforms in real-time, providing instant alerts.</p>
+                </div>
+                <div class="info-card glass">
+                    <i class="fas fa-database"></i>
+                    <h3>Centralized Database</h3>
+                    <p>All verified scam reports are stored in our secure, encrypted database accessible to partnered communities.</p>
+                </div>
+                <div class="info-card glass">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Automated Updates</h3>
+                    <p>Blacklist data is automatically synchronized across all connected services and platforms.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coming Soon -->
+        <section class="coming-soon glass fade-in">
+            <i class="fas fa-robot"></i>
+            <h3>Discord Bot Integration Coming Soon</h3>
+            <p>We're developing advanced Discord bot integration for seamless blacklist management directly from your server.</p>
+            <div style="margin-top: 1.5rem;">
+                <button class="cta-button secondary" id="notifyBtn">
+                    <i class="fas fa-bell"></i> Notify Me
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SpectraBlacklisting</h3>
+                <p style="color: var(--gray);">Advanced anti-scam protection for modern communities.</p>
+                <div style="margin-top: 1.5rem;">
+                    <a href="#" class="cta-button" style="display: inline-flex;">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#search">Search Database</a></li>
+                    <li><a href="#">Documentation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">API Documentation</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="mailto:contact@spectrablacklisting.com">contact@spectrablacklisting.com</a></li>
+                    <li><a href="#">Support Portal</a></li>
+                    <li><a href="#">Report False Positive</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="copyright">© <span class="year">2026</span> SpectraBlacklisting. All rights reserved.</p>
+            <p>This service is designed for community protection and scam prevention.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Current year
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElements = document.querySelectorAll('.year');
+            yearElements.forEach(el => {
+                el.textContent = '2026';
+            });
+            
+            // Animated stats counter
+            function animateCounter(element, target, suffix = '', duration = 2000) {
+                let start = 0;
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    start += increment;
+                    if (start >= target) {
+                        element.textContent = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(start) + suffix;
+                    }
+                }, 16);
+            }
+            
+            // Initialize stats with animation
+            setTimeout(() => {
+                animateCounter(document.getElementById('protectedCount'), 1284);
+                animateCounter(document.getElementById('incidentsCount'), 52417);
+                animateCounter(document.getElementById('responseTime'), 47, 'ms');
+                // Uptime stays at 100%
+            }, 500);
+            
+            // Search functionality
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performSearch();
+            });
+            
+            function performSearch() {
+                const query = searchInput.value.trim();
+                
+                if (!query) {
+                    showSearchMessage('Please enter a search query.', 'info');
+                    return;
+                }
+                
+                // Show loading state
+                searchBtn.innerHTML = '<div class="loading"></div>';
+                searchBtn.disabled = true;
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Reset button
+                    searchBtn.innerHTML = '<i class="fas fa-search"></i> Search';
+                    searchBtn.disabled = false;
+                    
+                    // Show results container
+                    searchResults.style.display = 'block';
+                    
+                    // Check for empty or test queries
+                    if (query.toLowerCase() === 'test' || query === '123') {
+                        showSearchMessage('No results found for your search query. Please try a different search term.', 'info');
+                    } else {
+                        // Simulate no results for demo
+                        showSearchMessage('Database connection required. This is a frontend demonstration. Connect to backend API for actual search functionality.', 'warning');
+                    }
+                }, 800);
+            }
+            
+            function showSearchMessage(message, type = 'info') {
+                const icon = type === 'info' ? 'fa-info-circle' : 'fa-exclamation-triangle';
+                const color = type === 'info' ? 'var(--primary)' : 'var(--warning)';
+                
+                resultsContent.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas ${icon}" style="font-size: 3rem; color: ${color}; margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--light); margin-bottom: 1rem;">Search Results</h3>
+                        <p style="color: var(--gray-light);">${message}</p>
+                    </div>
+                `;
+            }
+            
+            // Connect button functionality
+            document.getElementById('connectBtn').addEventListener('click', function() {
+                const btn = this;
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = '<div class="loading"></div>';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Connected';
+                    btn.style.background = 'linear-gradient(135deg, var(--accent), var(--accent-dark))';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.style.background = '';
+                    }, 3000);
+                }, 1500);
+            });
+            
+            // Learn More button
+            document.getElementById('learnMoreBtn').addEventListener('click', function() {
+                window.scrollTo({
+                    top: document.getElementById('about').offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Notify button
+            document.getElementById('notifyBtn').addEventListener('click', function() {
+                const btn = this;
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fas fa-check"></i> Notifications Enabled';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    if (targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Update active nav link
+                            document.querySelectorAll('nav a').forEach(link => {
+                                link.classList.remove('active');
+                            });
+                            this.classList.add('active');
+                        }
+                    }
+                });
+            });
+            
+            // Update active nav link on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPos = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        document.querySelectorAll('nav a').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
