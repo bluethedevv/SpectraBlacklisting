@@ -369,6 +369,11 @@
             color: #ef4444;
         }
 
+        .entry-type.doxxing {
+            background: rgba(220, 38, 38, 0.2);
+            color: #dc2626;
+        }
+
         .entry-content {
             padding: 1.5rem;
             display: grid;
@@ -616,11 +621,11 @@
         <!-- Stats Section -->
         <section id="stats" class="stats-grid">
             <div class="stat-card glass">
-                <div class="stat-number" id="totalEntries">5</div>
+                <div class="stat-number" id="totalEntries">4</div>
                 <div class="stat-label">Blacklisted Users</div>
             </div>
             <div class="stat-card glass">
-                <div class="stat-number" id="serversProtected">1</div>
+                <div class="stat-number" id="serversProtected">6+</div>
                 <div class="stat-label">Servers Protected</div>
             </div>
             <div class="stat-card glass">
@@ -657,6 +662,7 @@
                     <button class="filter-btn" data-filter="ai_fraud">AI Fraud</button>
                     <button class="filter-btn" data-filter="racism">Racism</button>
                     <button class="filter-btn" data-filter="harassment">Harassment</button>
+                    <button class="filter-btn" data-filter="doxxing">Doxxing</button>
                 </div>
                 
                 <!-- Results Area - LEER bis gesucht wird -->
@@ -698,7 +704,7 @@
                     Scan your ENTIRE server for blacklisted users. Shows exactly how many users were scanned and how many were moderated/banned.
                 </p>
                 <div class="command-example">
-                    📊 Users Scanned: 1,234 • Users Moderated: 5
+                    📊 Users Scanned: 1,234 • Users Moderated: 6
                 </div>
             </div>
             
@@ -733,7 +739,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>SpaceBlacklisting</h3>
-                <p style="color: var(--gray);">Universal protection with server-wide scanning.</p>
+                <p style="color: var(--gray);">Universal protection with server-wide scanning. Protecting 6+ communities.</p>
             </div>
             
             <div class="footer-section">
@@ -753,15 +759,25 @@
                     <li><a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank">Invite Bot</a></li>
                 </ul>
             </div>
+            
+            <div class="footer-section">
+                <h3>Database</h3>
+                <ul>
+                    <li>4 Blacklisted Users</li>
+                    <li>6+ Protected Servers</li>
+                    <li>Active Protection</li>
+                </ul>
+            </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2024 SpaceBlacklisting • Search to reveal entries</p>
+            <p>© 2026 SpaceBlacklisting • Search to reveal entries</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">4 users blacklisted • 6+ servers protected • Universal protection system</p>
         </div>
     </footer>
 
     <script>
-        // ============= BLACKLIST DATABASE - 5 EINTRÄGE =============
+        // ============= BLACKLIST DATABASE - 4 EINTRÄGE =============
         const blacklistDatabase = [
             {
                 discord_id: "1436474204881948803",
@@ -786,15 +802,24 @@
                 discord_name: "Userpuaesone_ng (1432595687798738964)",
                 roblox_user: "Unknown",
                 reason: "This user has committed Racism and harassment and fake accusations.",
-                date: new Date().toISOString().split('T')[0],
+                date: "2024-01-15",
                 type: "racism",
+                added_at_full: "2024-01-15T16:48:00"
+            },
+            {
+                discord_id: "1332090875693498490",
+                discord_name: "Userstepforder (1332090875693498490)",
+                roblox_user: "Unknown",
+                reason: "This user has Doxxed People. (unappealable Blacklist)",
+                date: new Date().toISOString().split('T')[0],
+                type: "doxxing",
                 added_at_full: new Date().toISOString()
             }
         ];
 
-        // Update stats - 5 Einträge
+        // Update stats - 4 Einträge, 6+ Server
         document.getElementById('totalEntries').textContent = blacklistDatabase.length;
-        document.getElementById('serversProtected').textContent = '1+';
+        document.getElementById('serversProtected').textContent = '6+';
 
         // ============= SEARCH FUNCTIONALITY =============
         let currentFilter = 'all';
@@ -901,8 +926,12 @@
                             typeClass = 'unappealable';
                         } else if (entry.type === 'asset_theft') {
                             typeClass = 'asset_theft';
-                        } else if (entry.type === 'racism' || entry.type === 'harassment') {
-                            typeClass = entry.type;
+                        } else if (entry.type === 'racism') {
+                            typeClass = 'racism';
+                        } else if (entry.type === 'harassment') {
+                            typeClass = 'harassment';
+                        } else if (entry.type === 'doxxing') {
+                            typeClass = 'doxxing';
                         }
                         
                         return `
@@ -999,11 +1028,10 @@
         // Initial page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log(`🚀 SpaceBlacklisting • Database: ${blacklistDatabase.length} entries`);
+            console.log(`🛡️ Servers Protected: 6+`);
             console.log(`🔍 Search functionality active - No entries shown by default`);
             console.log(`🔗 Support: https://discord.gg/gC7JQz64qQ`);
-            
-            // Neue Einträge: 3 Blacklisted Users
-            console.log(`📋 Blacklisted: mrchristmas_1, lol062752, Userpuaesone_ng`);
+            console.log(`📋 Blacklisted: mrchristmas_1, lol062752, Userpuaesone_ng, Userstepforder`);
         });
     </script>
 </body>
