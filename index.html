@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpaceBlacklisting</title>
+    <title>SpaceBlacklisting - Blacklist Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -23,6 +23,9 @@
             --gray: #64748b;
             --gray-dark: #334155;
             --gray-light: #e2e8f0;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
             
             --glass-bg: rgba(255, 255, 255, 0.07);
             --glass-border: rgba(255, 255, 255, 0.12);
@@ -40,7 +43,6 @@
             line-height: 1.6;
         }
 
-        /* Liquid Glass Effect */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(16px) saturate(180%);
@@ -147,11 +149,11 @@
         /* Hero */
         .hero {
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -162,68 +164,26 @@
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--gray-light);
             max-width: 700px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .cta-button {
-            padding: 1rem 2rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cta-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .cta-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-        }
-
-        .cta-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        /* Stats */
-        .stats {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin: 4rem 0;
+            margin: 3rem 0;
         }
 
         .stat-card {
-            padding: 2.5rem;
+            padding: 2rem;
             text-align: center;
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--accent);
             line-height: 1;
@@ -232,57 +192,29 @@
 
         .stat-label {
             color: var(--gray);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
-        /* Features */
-        .features {
-            margin: 4rem 0;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            padding: 2rem;
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--light);
-        }
-
-        /* Search */
+        /* Search Section */
         .search-section {
-            margin: 4rem 0;
+            margin: 3rem 0;
         }
 
         .search-container {
-            padding: 3rem;
+            padding: 2.5rem;
         }
 
         .section-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
             color: var(--light);
         }
 
         .search-box {
             display: flex;
             gap: 12px;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
         }
 
         .search-input {
@@ -311,19 +243,80 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .search-button:hover {
             background: var(--primary-dark);
         }
 
-        /* Database Entry Card */
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gray-dark);
+            color: var(--gray-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        /* Results Area */
+        .results-area {
+            margin-top: 2rem;
+            min-height: 300px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Blacklist Entry Card */
         .entry-card {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: var(--radius-sm);
             border-left: 4px solid var(--primary);
             margin-bottom: 1.5rem;
             overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .entry-header {
@@ -332,6 +325,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .entry-id {
@@ -341,12 +336,22 @@
         }
 
         .entry-type {
-            background: rgba(255, 0, 0, 0.2);
+            background: rgba(239, 68, 68, 0.2);
             color: #ff4444;
             padding: 0.2rem 0.8rem;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .entry-type.unappealable {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ff4444;
+        }
+
+        .entry-type.asset_theft {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
         }
 
         .entry-content {
@@ -357,41 +362,93 @@
         }
 
         .entry-field {
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .field-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .field-value {
             color: var(--light);
             word-break: break-word;
+            font-size: 1rem;
+        }
+
+        .field-value.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .search-highlight {
+            background: rgba(139, 92, 246, 0.3);
+            padding: 0.2rem;
+            border-radius: 4px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-dark);
+        }
+
+        .results-count {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .clear-search {
+            background: none;
+            border: 1px solid var(--gray-dark);
+            color: var(--gray-light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .clear-search:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Bot Info */
         .bot-info {
-            margin: 4rem 0;
-            padding: 3rem;
+            margin: 3rem 0;
+            padding: 2.5rem;
         }
 
-        .bot-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 2rem;
+        .bot-feature {
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+            border-radius: var(--radius-sm);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
         }
 
-        .bot-header i {
-            font-size: 2.5rem;
-            color: #5865f2;
+        .feature-highlight {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .command-example {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Consolas', monospace;
+            color: var(--accent);
+            margin-top: 1rem;
         }
 
         .commands-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
@@ -421,13 +478,13 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 3rem;
             margin-bottom: 3rem;
         }
 
         .footer-section h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
             color: var(--light);
         }
@@ -458,19 +515,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--gray);
-        }
-
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -484,47 +528,23 @@
                 gap: 0.5rem;
             }
             
-            .hero {
-                padding: 4rem 1rem;
-            }
-            
             .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
+                font-size: 2.5rem;
             }
             
             .search-box {
                 flex-direction: column;
             }
             
-            main {
+            .search-button {
                 padding: 1rem;
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .features-grid, .commands-grid {
-                grid-template-columns: 1fr;
             }
             
             .entry-content {
                 grid-template-columns: 1fr;
             }
-            
-            @media (max-width: 480px) {
-                .stats {
-                    grid-template-columns: 1fr;
-                }
-            }
         }
 
-        /* Loading */
         .loading {
             display: inline-block;
             width: 20px;
@@ -541,7 +561,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <a href="#" class="logo">
             <div class="logo-icon">SB</div>
@@ -550,9 +569,9 @@
         <nav>
             <ul>
                 <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#database">Database</a></li>
+                <li><a href="#search">Database</a></li>
                 <li><a href="#bot">Bot</a></li>
+                <li><a href="#stats">Stats</a></li>
             </ul>
         </nav>
         <a href="https://discord.gg/gC7JQz64qQ" target="_blank" class="discord-btn">
@@ -560,205 +579,153 @@
         </a>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Hero -->
+        <!-- Hero Section -->
         <section id="home" class="hero">
             <h1>SpaceBlacklisting</h1>
-            <p>Universal protection system with auto-banning. Scan and protect your servers from blacklisted users in real-time.</p>
+            <p>Universal protection system with server-wide scanning. Search our blacklist database to check users.</p>
             
-            <div class="cta-buttons">
-                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="cta-button cta-primary">
-                    <i class="fas fa-robot"></i> Add Bot to Server
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="discord-btn" style="background: var(--primary);">
+                    <i class="fas fa-robot"></i> Add Bot
                 </a>
-                <a href="https://discord.gg/gC7JQz64qQ" target="_blank" class="cta-button cta-secondary">
-                    <i class="fab fa-discord"></i> Join Support Server
+                <a href="#search" class="discord-btn" style="background: transparent; border: 1px solid var(--gray);">
+                    <i class="fas fa-search"></i> Search Database
                 </a>
             </div>
         </section>
 
-        <!-- Stats -->
-        <section class="stats">
+        <!-- Stats Section -->
+        <section id="stats" class="stats-grid">
             <div class="stat-card glass">
-                <div class="stat-number" id="serverCount">1</div>
-                <div class="stat-label">Servers Protected</div>
-            </div>
-            <div class="stat-card glass">
-                <div class="stat-number" id="blacklistCount">1</div>
+                <div class="stat-number" id="totalEntries">2</div>
                 <div class="stat-label">Blacklisted Users</div>
             </div>
             <div class="stat-card glass">
-                <div class="stat-number">47ms</div>
-                <div class="stat-label">Average Response Time</div>
+                <div class="stat-number" id="serversProtected">1</div>
+                <div class="stat-label">Servers Protected</div>
             </div>
             <div class="stat-card glass">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">Universal Protection</div>
+                <div class="stat-number" id="scanFeature">/scan</div>
+                <div class="stat-label">Server Scan</div>
+            </div>
+            <div class="stat-card glass">
+                <div class="stat-number" id="autoBan">⚡</div>
+                <div class="stat-label">Auto-Ban</div>
             </div>
         </section>
 
-        <!-- Features -->
-        <section id="features" class="features">
+        <!-- Search Section - NUR SUCHFUNKTION, KEINE DIREKTEN EINTRÄGE -->
+        <section id="search" class="search-section">
             <div class="search-container glass">
-                <h2 class="section-title">✨ Universal Protection Features</h2>
-                <p style="color: var(--gray); margin-bottom: 2rem;">Everything you need to protect your community</p>
+                <h2 class="section-title">🔍 Blacklist Database Search</h2>
+                <p style="color: var(--gray); margin-bottom: 1.5rem;">
+                    Search by Discord ID, username, Roblox user, or reason. Only shows results when you search.
+                </p>
                 
-                <div class="features-grid">
-                    <div class="feature-card glass">
-                        <div class="feature-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3 class="feature-title">Real-time Scanning</h3>
-                        <p style="color: var(--gray-light);">Use /scan command to check users against the global blacklist database instantly.</p>
-                    </div>
-                    
-                    <div class="feature-card glass">
-                        <div class="feature-icon">
-                            <i class="fas fa-ban"></i>
-                        </div>
-                        <h3 class="feature-title">Auto-Ban System</h3>
-                        <p style="color: var(--gray-light);">Automatically ban blacklisted users with a single command. No manual work needed.</p>
-                    </div>
-                    
-                    <div class="feature-card glass">
-                        <div class="feature-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3 class="feature-title">Cross-Server Protection</h3>
-                        <p style="color: var(--gray-light);">Blacklist entries work across all servers using SpaceBlacklisting bot.</p>
-                    </div>
-                    
-                    <div class="feature-card glass">
-                        <div class="feature-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <h3 class="feature-title">Smart Logging</h3>
-                        <p style="color: var(--gray-light);">Get notified of all blacklist checks, bans, and updates in your designated log channel.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blacklist Database -->
-        <section id="database" class="search-section">
-            <div class="search-container glass">
-                <h2 class="section-title">📋 Blacklist Database</h2>
-                <p style="color: var(--gray); margin-bottom: 2rem;">Currently showing 1 blacklisted user in the database</p>
-                
-                <!-- Search Box -->
                 <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search by Discord ID, username, or reason...">
+                    <input type="text" class="search-input" id="searchInput" 
+                           placeholder="Enter Discord ID, username, or reason... (e.g., lol062752, mrchristmas_1, AI, asset)" 
+                           autocomplete="off">
                     <button class="search-button" id="searchBtn">
-                        <i class="fas fa-search"></i> Search
+                        <i class="fas fa-search"></i> Search Database
                     </button>
                 </div>
                 
-                <!-- Blacklist Entry -->
-                <div class="entry-card">
-                    <div class="entry-header">
-                        <div class="entry-id">ID: 1436474204881948803</div>
-                        <div class="entry-type">UNAPPEALABLE</div>
-                    </div>
-                    <div class="entry-content">
-                        <div class="entry-field">
-                            <div class="field-label">Discord User</div>
-                            <div class="field-value">User1436474204881948803 (mrchristmas_1)</div>
-                        </div>
-                        <div class="entry-field">
-                            <div class="field-label">Roblox User</div>
-                            <div class="field-value">YourDeveloper_1</div>
-                        </div>
-                        <div class="entry-field">
-                            <div class="field-label">Type</div>
-                            <div class="field-value">Scam / AI Fraud</div>
-                        </div>
-                        <div class="entry-field">
-                            <div class="field-label">Date Added</div>
-                            <div class="field-value">Today at 14:49</div>
-                        </div>
-                        <div class="entry-field" style="grid-column: 1 / -1;">
-                            <div class="field-label">Reason</div>
-                            <div class="field-value">
-                                Using AI tools to make everything & makes fake companies and closes them after a while, 
-                                can't make anything himself and uses AI all the Time, also stealing maps. 
-                                (unappealable Blacklist)
-                            </div>
-                        </div>
-                        <div class="entry-field" style="grid-column: 1 / -1;">
-                            <div class="field-label">Action</div>
-                            <div class="field-value">User added to blacklist</div>
-                        </div>
-                    </div>
+                <div class="search-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="unappealable">Unappealable</button>
+                    <button class="filter-btn" data-filter="asset_theft">Asset Theft</button>
+                    <button class="filter-btn" data-filter="ai_fraud">AI Fraud</button>
                 </div>
                 
-                <!-- Database Info -->
-                <div style="text-align: center; margin-top: 2rem; color: var(--gray); font-size: 0.9rem;">
-                    <p>SpaceBlacklisting • 1 total entries</p>
+                <!-- Results Area - LEER bis gesucht wird -->
+                <div id="resultsArea" class="results-area">
+                    <!-- Empty State - Wird standardmäßig angezeigt -->
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>No Search Performed</h3>
+                        <p>Enter a search term above to check the blacklist database.</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
+                            Example: "lol062752", "mrchristmas_1", "AI", "asset theft"
+                        </p>
+                    </div>
+                    
+                    <!-- Results Container - VERSTECKT bis gesucht wird -->
+                    <div id="resultsContainer" style="display: none;">
+                        <div class="results-header">
+                            <span class="results-count" id="resultCount">0 results found</span>
+                            <button class="clear-search" id="clearSearchBtn">
+                                <i class="fas fa-times"></i> Clear Search
+                            </button>
+                        </div>
+                        <div id="searchResults"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Bot Info -->
+        <!-- Bot Info Section -->
         <section id="bot" class="bot-info glass">
-            <div class="bot-header">
-                <i class="fab fa-discord"></i>
-                <h2 style="font-size: 2rem;">Discord Bot Commands</h2>
-            </div>
-            
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">🤖 Discord Bot</h2>
             <p style="color: var(--gray-light); margin-bottom: 2rem;">
-                Add our Discord bot to your server for universal protection with auto-banning.
+                Scan entire servers with one command. Auto-ban blacklisted users instantly.
             </p>
+            
+            <div class="bot-feature">
+                <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--accent);"></i>
+                <div class="feature-highlight">/scan server</div>
+                <p style="color: var(--gray-light); max-width: 600px; margin: 0 auto;">
+                    Scan your ENTIRE server for blacklisted users. Shows exactly how many users were scanned and how many were moderated/banned.
+                </p>
+                <div class="command-example">
+                    📊 Users Scanned: 1,234 • Users Moderated: 5
+                </div>
+            </div>
             
             <div class="commands-grid">
                 <div class="command-card">
-                    <div class="command-name">/scan @user [auto_ban:true]</div>
-                    <p>Scan a user and automatically ban them if they're blacklisted.</p>
+                    <div class="command-name">🔍 /scan server</div>
+                    <p>Scan entire server - Shows scan statistics and auto-bans blacklisted users</p>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">/blacklist add @user [roblox] [reason]</div>
-                    <p>Add a user to the global blacklist (Main server admins only).</p>
+                    <div class="command-name">👤 /scan @user</div>
+                    <p>Scan single user and auto-ban if blacklisted</p>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">/blacklist check @user</div>
-                    <p>Check if a user is currently blacklisted in the system.</p>
+                    <div class="command-name">📋 /blacklist view</div>
+                    <p>View all blacklisted users in the database</p>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">/logchannel #channel</div>
-                    <p>Set a channel to receive blacklist notifications and scan logs.</p>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">/blacklist view</div>
-                    <p>View all currently blacklisted users in your server.</p>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">/stats</div>
-                    <p>View blacklist statistics and protection metrics.</p>
+                    <div class="command-name">📊 /stats</div>
+                    <p>View global statistics and scan history</p>
                 </div>
             </div>
             
-            <div style="margin-top: 3rem; text-align: center;">
-                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="cta-button cta-primary" style="font-size: 1.1rem; padding: 1rem 2.5rem;">
-                    <i class="fas fa-robot"></i> Add Bot to Your Server
+            <div style="margin-top: 2rem; text-align: center;">
+                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="discord-btn" style="background: var(--primary);">
+                    <i class="fas fa-robot"></i> Add Bot to Server
                 </a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h3>SpaceBlacklisting</h3>
-                <p style="color: var(--gray);">Universal protection with auto-banning. Keep your community safe.</p>
+                <p style="color: var(--gray);">Universal protection with server-wide scanning.</p>
             </div>
             
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#database">Database</a></li>
-                    <li><a href="#bot">Bot Commands</a></li>
+                    <li><a href="#search">Database</a></li>
+                    <li><a href="#bot">Bot</a></li>
+                    <li><a href="#stats">Statistics</a></li>
                 </ul>
             </div>
             
@@ -767,39 +734,83 @@
                 <ul>
                     <li><a href="https://discord.gg/gC7JQz64qQ" target="_blank">Support Server</a></li>
                     <li><a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank">Invite Bot</a></li>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <ul>
-                    <li>Support: Discord Server</li>
-                    <li>Bot ID: 1470025458837098516</li>
-                    <li>Status: Operational</li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2024 SpaceBlacklisting. Universal Protection System.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.8rem;">Scan • Auto-Ban • Protect</p>
+            <p>© 2024 SpaceBlacklisting • Search to reveal entries</p>
         </div>
     </footer>
 
     <script>
-        // Search functionality
+        // ============= BLACKLIST DATABASE =============
+        const blacklistDatabase = [
+            {
+                discord_id: "1436474204881948803",
+                discord_name: "User1436474204881948803 (mrchristmas_1)",
+                roblox_user: "YourDeveloper_1",
+                reason: "Using AI tools to make everything & makes fake companies and closes them after a while, cant make anything himself and uses AI all the Time, also stealing maps. (unappealable Blacklist)",
+                date: "2024-01-15",
+                type: "unappealable",
+                added_at_full: "2024-01-15T14:49:00"
+            },
+            {
+                discord_id: "lol062752",
+                discord_name: "lol062752",
+                roblox_user: "Unknown",
+                reason: "Using assets from other companies, and claims that he made them.",
+                date: new Date().toISOString().split('T')[0],
+                type: "asset_theft",
+                added_at_full: new Date().toISOString()
+            }
+        ];
+
+        // Update stats
+        document.getElementById('totalEntries').textContent = blacklistDatabase.length;
+        document.getElementById('serversProtected').textContent = '1+';
+
+        // ============= SEARCH FUNCTIONALITY =============
+        let currentFilter = 'all';
+        let lastQuery = '';
+
+        // Search button click
         document.getElementById('searchBtn').addEventListener('click', performSearch);
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') performSearch();
         });
 
+        // Clear search button
+        document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                
+                // Re-run search if there's a query
+                if (lastQuery.trim()) {
+                    performSearch();
+                }
+            });
+        });
+
         function performSearch() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            lastQuery = query;
+            
             const searchBtn = document.getElementById('searchBtn');
+            const emptyState = document.getElementById('emptyState');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const searchResults = document.getElementById('searchResults');
+            const resultCount = document.getElementById('resultCount');
             
             if (!query) {
+                // Show empty state, hide results
+                emptyState.style.display = 'block';
+                resultsContainer.style.display = 'none';
                 return;
             }
             
@@ -811,57 +822,110 @@
             // Simulate search delay
             setTimeout(() => {
                 // Reset button
-                searchBtn.innerHTML = '<i class="fas fa-search"></i> Search';
+                searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Database';
                 searchBtn.disabled = false;
                 
-                // Check if query matches the blacklisted user
-                const blacklistEntry = {
-                    id: '1436474204881948803',
-                    discordName: 'User1436474204881948803 (mrchristmas_1)',
-                    robloxUser: 'YourDeveloper_1',
-                    reason: 'Using AI tools to make everything & makes fake companies and closes them after a while, can\'t make anything himself and uses AI all the Time, also stealing maps. (unappealable Blacklist)'
-                };
-                
-                // Check if query matches any part of the entry
-                const matches = 
-                    blacklistEntry.id.includes(query) ||
-                    blacklistEntry.discordName.toLowerCase().includes(query) ||
-                    blacklistEntry.robloxUser.toLowerCase().includes(query) ||
-                    blacklistEntry.reason.toLowerCase().includes(query) ||
-                    query.includes('ai') || query.includes('tool') || query.includes('fake');
-                
-                if (matches) {
-                    // Highlight the entry
-                    const entryCard = document.querySelector('.entry-card');
-                    entryCard.style.animation = 'none';
-                    setTimeout(() => {
-                        entryCard.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5)';
-                        setTimeout(() => {
-                            entryCard.style.boxShadow = '';
-                        }, 2000);
-                    }, 10);
+                // Filter by search query
+                let results = blacklistDatabase.filter(entry => {
+                    // First apply filter
+                    if (currentFilter !== 'all' && entry.type !== currentFilter) {
+                        return false;
+                    }
                     
-                    // Scroll to entry
-                    entryCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Then search query
+                    return (
+                        entry.discord_id.toLowerCase().includes(query) ||
+                        entry.discord_name.toLowerCase().includes(query) ||
+                        entry.roblox_user.toLowerCase().includes(query) ||
+                        entry.reason.toLowerCase().includes(query) ||
+                        entry.type.toLowerCase().includes(query)
+                    );
+                });
+                
+                // Hide empty state, show results container
+                emptyState.style.display = 'none';
+                resultsContainer.style.display = 'block';
+                
+                // Update result count
+                resultCount.textContent = `${results.length} result${results.length === 1 ? '' : 's'} found for "${query}"`;
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = `
+                        <div class="empty-state" style="padding: 3rem;">
+                            <div class="empty-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>No Results Found</h3>
+                            <p>No blacklist entries match "${query}"</p>
+                            <p style="margin-top: 1rem; color: var(--gray);">Try different keywords or check the Discord ID</p>
+                        </div>
+                    `;
                 } else {
-                    // Show no results message
-                    alert(`No results found for "${query}". Try searching for: "1436474204881948803", "YourDeveloper_1", or "AI"`);
+                    // Display results
+                    searchResults.innerHTML = results.map((entry, index) => {
+                        // Highlight search terms
+                        const highlightedName = highlightText(entry.discord_name, query);
+                        const highlightedReason = highlightText(entry.reason, query);
+                        const highlightedRoblox = highlightText(entry.roblox_user, query);
+                        const highlightedId = highlightText(entry.discord_id, query);
+                        
+                        const typeClass = entry.type === 'unappealable' ? 'unappealable' : 
+                                        entry.type === 'asset_theft' ? 'asset_theft' : '';
+                        
+                        return `
+                            <div class="entry-card">
+                                <div class="entry-header">
+                                    <div class="entry-id">ID: ${highlightedId}</div>
+                                    <div class="entry-type ${typeClass}">${entry.type.replace('_', ' ').toUpperCase()}</div>
+                                </div>
+                                <div class="entry-content">
+                                    <div class="entry-field">
+                                        <div class="field-label">Discord User</div>
+                                        <div class="field-value">${highlightedName}</div>
+                                    </div>
+                                    <div class="entry-field">
+                                        <div class="field-label">Roblox User</div>
+                                        <div class="field-value">${highlightedRoblox}</div>
+                                    </div>
+                                    <div class="entry-field">
+                                        <div class="field-label">Date Added</div>
+                                        <div class="field-value">${entry.date}</div>
+                                    </div>
+                                    <div class="entry-field full-width">
+                                        <div class="field-label">Reason</div>
+                                        <div class="field-value">${highlightedReason}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
                 }
             }, 300);
         }
 
-        // Navigation
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            lastQuery = '';
+        }
+
+        // ============= NAVIGATION =============
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // Update active link
                 document.querySelectorAll('nav a').forEach(link => {
                     link.classList.remove('active');
                 });
                 this.classList.add('active');
                 
-                // Smooth scroll
                 const targetId = this.getAttribute('href');
                 if (targetId.startsWith('#')) {
                     const targetElement = document.querySelector(targetId);
@@ -875,7 +939,6 @@
             });
         });
 
-        // Update active nav on scroll
         window.addEventListener('scroll', function() {
             const sections = document.querySelectorAll('section[id]');
             const scrollPos = window.scrollY + 150;
@@ -896,11 +959,11 @@
             });
         });
 
-        // Page load
+        // Initial page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log(`🚀 SpaceBlacklisting • Universal Protection System`);
-            console.log(`📋 Currently tracking 1 blacklisted user`);
-            console.log(`🔗 Support Server: https://discord.gg/gC7JQz64qQ`);
+            console.log(`🚀 SpaceBlacklisting • Database: ${blacklistDatabase.length} entries`);
+            console.log(`🔍 Search functionality active - No entries shown by default`);
+            console.log(`🔗 Support: https://discord.gg/gC7JQz64qQ`);
         });
     </script>
 </body>
