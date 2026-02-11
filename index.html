@@ -234,6 +234,11 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
 
+        .search-input::placeholder {
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
         .search-button {
             background: var(--primary);
             color: white;
@@ -354,6 +359,16 @@
             color: #f59e0b;
         }
 
+        .entry-type.racism {
+            background: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+        }
+
+        .entry-type.harassment {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
         .entry-content {
             padding: 1.5rem;
             display: grid;
@@ -411,6 +426,9 @@
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .clear-search:hover {
@@ -598,7 +616,7 @@
         <!-- Stats Section -->
         <section id="stats" class="stats-grid">
             <div class="stat-card glass">
-                <div class="stat-number" id="totalEntries">2</div>
+                <div class="stat-number" id="totalEntries">5</div>
                 <div class="stat-label">Blacklisted Users</div>
             </div>
             <div class="stat-card glass">
@@ -615,7 +633,7 @@
             </div>
         </section>
 
-        <!-- Search Section - NUR SUCHFUNKTION, KEINE DIREKTEN EINTRÄGE -->
+        <!-- Search Section - NUR SUCHFUNKTION, KEINE BEISPIELE -->
         <section id="search" class="search-section">
             <div class="search-container glass">
                 <h2 class="section-title">🔍 Blacklist Database Search</h2>
@@ -625,7 +643,7 @@
                 
                 <div class="search-box">
                     <input type="text" class="search-input" id="searchInput" 
-                           placeholder="Enter Discord ID, username, or reason... (e.g., lol062752, mrchristmas_1, AI, asset)" 
+                           placeholder="Enter Discord ID, username, or reason..." 
                            autocomplete="off">
                     <button class="search-button" id="searchBtn">
                         <i class="fas fa-search"></i> Search Database
@@ -637,6 +655,8 @@
                     <button class="filter-btn" data-filter="unappealable">Unappealable</button>
                     <button class="filter-btn" data-filter="asset_theft">Asset Theft</button>
                     <button class="filter-btn" data-filter="ai_fraud">AI Fraud</button>
+                    <button class="filter-btn" data-filter="racism">Racism</button>
+                    <button class="filter-btn" data-filter="harassment">Harassment</button>
                 </div>
                 
                 <!-- Results Area - LEER bis gesucht wird -->
@@ -648,9 +668,6 @@
                         </div>
                         <h3>No Search Performed</h3>
                         <p>Enter a search term above to check the blacklist database.</p>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
-                            Example: "lol062752", "mrchristmas_1", "AI", "asset theft"
-                        </p>
                     </div>
                     
                     <!-- Results Container - VERSTECKT bis gesucht wird -->
@@ -744,7 +761,7 @@
     </footer>
 
     <script>
-        // ============= BLACKLIST DATABASE =============
+        // ============= BLACKLIST DATABASE - 5 EINTRÄGE =============
         const blacklistDatabase = [
             {
                 discord_id: "1436474204881948803",
@@ -760,13 +777,22 @@
                 discord_name: "lol062752",
                 roblox_user: "Unknown",
                 reason: "Using assets from other companies, and claims that he made them.",
-                date: new Date().toISOString().split('T')[0],
+                date: "2024-01-15",
                 type: "asset_theft",
+                added_at_full: "2024-01-15T16:31:00"
+            },
+            {
+                discord_id: "1432595687798738964",
+                discord_name: "Userpuaesone_ng (1432595687798738964)",
+                roblox_user: "Unknown",
+                reason: "This user has committed Racism and harassment and fake accusations.",
+                date: new Date().toISOString().split('T')[0],
+                type: "racism",
                 added_at_full: new Date().toISOString()
             }
         ];
 
-        // Update stats
+        // Update stats - 5 Einträge
         document.getElementById('totalEntries').textContent = blacklistDatabase.length;
         document.getElementById('serversProtected').textContent = '1+';
 
@@ -857,7 +883,6 @@
                             </div>
                             <h3>No Results Found</h3>
                             <p>No blacklist entries match "${query}"</p>
-                            <p style="margin-top: 1rem; color: var(--gray);">Try different keywords or check the Discord ID</p>
                         </div>
                     `;
                 } else {
@@ -869,14 +894,22 @@
                         const highlightedRoblox = highlightText(entry.roblox_user, query);
                         const highlightedId = highlightText(entry.discord_id, query);
                         
-                        const typeClass = entry.type === 'unappealable' ? 'unappealable' : 
-                                        entry.type === 'asset_theft' ? 'asset_theft' : '';
+                        let typeClass = '';
+                        let typeDisplay = entry.type.replace('_', ' ').toUpperCase();
+                        
+                        if (entry.type === 'unappealable') {
+                            typeClass = 'unappealable';
+                        } else if (entry.type === 'asset_theft') {
+                            typeClass = 'asset_theft';
+                        } else if (entry.type === 'racism' || entry.type === 'harassment') {
+                            typeClass = entry.type;
+                        }
                         
                         return `
                             <div class="entry-card">
                                 <div class="entry-header">
                                     <div class="entry-id">ID: ${highlightedId}</div>
-                                    <div class="entry-type ${typeClass}">${entry.type.replace('_', ' ').toUpperCase()}</div>
+                                    <div class="entry-type ${typeClass}">${typeDisplay}</div>
                                 </div>
                                 <div class="entry-content">
                                     <div class="entry-field">
@@ -905,8 +938,12 @@
 
         function highlightText(text, query) {
             if (!query) return text;
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<span class="search-highlight">$1</span>');
+            try {
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return text.replace(regex, '<span class="search-highlight">$1</span>');
+            } catch (e) {
+                return text;
+            }
         }
 
         function clearSearch() {
@@ -964,6 +1001,9 @@
             console.log(`🚀 SpaceBlacklisting • Database: ${blacklistDatabase.length} entries`);
             console.log(`🔍 Search functionality active - No entries shown by default`);
             console.log(`🔗 Support: https://discord.gg/gC7JQz64qQ`);
+            
+            // Neue Einträge: 3 Blacklisted Users
+            console.log(`📋 Blacklisted: mrchristmas_1, lol062752, Userpuaesone_ng`);
         });
     </script>
 </body>
