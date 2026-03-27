@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceBlacklisting — Community Protection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -415,12 +416,6 @@
             color: var(--text-dim);
         }
 
-        .empty-state i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
         .empty-state h3 {
             font-size: 15px;
             color: var(--text-muted);
@@ -585,9 +580,8 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            font-size: 18px;
         }
-
-        .scan-icon i { color: var(--accent2); }
 
         .scan-text strong {
             display: block;
@@ -674,7 +668,7 @@
             <a href="#home" class="active">Home</a>
             <a href="#database">Database</a>
             <a href="#bot">Bot</a>
-            <a href="https://discord.gg/gC7JQz64qQ" target="_blank" class="discord-link">
+            <a href="https://discord.gg/FZU28ZJnFZ" target="_blank" class="discord-link">
                 <i class="fab fa-discord"></i> Discord
             </a>
         </nav>
@@ -689,13 +683,13 @@
             <h1>Keep your server <span>safe.</span></h1>
             <p>SpaceBlacklisting is a shared blacklist system for Discord communities. Search our database, scan your server, and automatically block known bad actors.</p>
             <div class="hero-cta">
-                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="btn btn-primary">
+                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">
                     <i class="fas fa-robot"></i> Add Bot
                 </a>
                 <a href="#database" class="btn btn-outline">
                     <i class="fas fa-search"></i> Search Database
                 </a>
-                <a href="https://discord.gg/gC7JQz64qQ" target="_blank" class="btn btn-discord">
+                <a href="https://discord.gg/FZU28ZJnFZ" target="_blank" class="btn btn-discord">
                     <i class="fab fa-discord"></i> Join Discord
                 </a>
             </div>
@@ -749,7 +743,6 @@
 
         <div id="resultsArea">
             <div id="emptyState" class="empty-state">
-                <i class="fas fa-magnifying-glass"></i>
                 <h3>No search yet</h3>
                 <p>Type something above to search the database.</p>
             </div>
@@ -757,7 +750,7 @@
             <div id="resultsContainer" style="display:none;">
                 <div class="results-meta">
                     <span class="results-count" id="resultCount"></span>
-                    <button class="clear-btn" id="clearBtn"><i class="fas fa-xmark"></i> Clear</button>
+                    <button class="clear-btn" id="clearBtn">Clear</button>
                 </div>
                 <div id="searchResults"></div>
             </div>
@@ -773,14 +766,6 @@
         <div class="section-sub">Add the bot to your server and scan everyone at once — or check individual users on demand.</div>
 
         <div class="bot-section">
-            <div class="scan-highlight">
-                <div class="scan-icon"><i class="fas fa-shield-halved"></i></div>
-                <div class="scan-text">
-                    <strong>/scan server</strong>
-                    <span>Scans every member in your server and auto-bans anyone in the blacklist. Gives you a full summary when done.</span>
-                </div>
-            </div>
-
             <table class="commands-table">
                 <thead>
                     <tr>
@@ -809,7 +794,7 @@
             </table>
 
             <div style="margin-top:2rem;">
-                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank" class="btn btn-primary">
+                <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&integration_type=0&scope=bot" target="_blank" class="btn btn-primary">
                     <i class="fas fa-robot"></i> Add Bot to Server
                 </a>
             </div>
@@ -821,8 +806,8 @@
     <div class="footer-row">
         <div class="footer-left">© 2026 SpaceBlacklisting — <span id="footerCount">8</span> entries — 6+ servers protected</div>
         <div class="footer-right">
-            <a href="https://discord.gg/gC7JQz64qQ" target="_blank">Support</a>
-            <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&scope=bot" target="_blank">Add Bot</a>
+            <a href="https://discord.gg/FZU28ZJnFZ" target="_blank">Support</a>
+            <a href="https://discord.com/oauth2/authorize?client_id=1470025458837098516&permissions=8&integration_type=0&scope=bot" target="_blank">Add Bot</a>
             <a href="#database">Database</a>
         </div>
     </div>
@@ -959,7 +944,6 @@ function doSearch() {
             resultCount.innerHTML = `<strong>0</strong> results for "${q}"`;
             searchResults.innerHTML = `
                 <div class="empty-state">
-                    <i class="fas fa-magnifying-glass"></i>
                     <h3>No results found</h3>
                     <p>No entries match "${q}"</p>
                 </div>`;
